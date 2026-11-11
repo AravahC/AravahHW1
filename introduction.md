@@ -6,12 +6,11 @@ To make things a bit more fun, each TA added a link to song/video we would like 
 
 ## Staff Playlist!
 
-1. [Kareem](https://www.youtube.com/watch?v=tcn0NSq8ApA)
+1. [Liel](https://youtu.be/cZgUiR31m-Y?si=MHTNZfivkKLBINEK)
 2. [Regev](https://youtu.be/kXYiU_JCYtU?si=ZoezJODtRojb4qpc)
 3. [Daniel](https://www.youtube.com/watch?v=czb_CZfWko8&list=RDczb_CZfWko8&start_radio=1)
-4. [Mohammad](https://youtu.be/58TBZnvyGwQ?si=z5xr66NVBJAbJSPN)
-5. [Leil](https://youtu.be/cZgUiR31m-Y?si=MHTNZfivkKLBINEK)
-6. [Noam](https://youtu.be/CoOibAstPJ4?si=JZz6Id0HTM_NjD_J)
+4. [Noam](https://youtu.be/CoOibAstPJ4?si=JZz6Id0HTM_NjD_J](https://youtu.be/iiyQWOSpOEE?si=xeud_k3ddraoDpXr))
+5. [Avihay](https://youtu.be/cZgUiR31m-Y?si=MHTNZfivkKLBINEK)
 
 ## Your Part!
 
