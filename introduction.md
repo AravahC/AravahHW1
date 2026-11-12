@@ -10,7 +10,7 @@ To make things a bit more fun, each TA added a link to song/video we would like 
 2. [Regev](https://youtu.be/kXYiU_JCYtU?si=ZoezJODtRojb4qpc)
 3. [Daniel](https://www.youtube.com/watch?v=czb_CZfWko8&list=RDczb_CZfWko8&start_radio=1)
 4. [Noam](https://youtu.be/CoOibAstPJ4?si=JZz6Id0HTM_NjD_J](https://youtu.be/iiyQWOSpOEE?si=xeud_k3ddraoDpXr))
-5. [Avihay](https://youtu.be/cZgUiR31m-Y?si=MHTNZfivkKLBINEK)
+5. [Avihay]([https://youtu.be/cZgUiR31m-Y?si=MHTNZfivkKLBINEK](https://youtu.be/b4Bj7Zb-YD4))
 
 ## Your Part!
 
