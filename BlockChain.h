@@ -13,13 +13,20 @@ using std::ofstream;
 typedef unsigned int (*updateFunction)(unsigned int);
 
 
+struct Node{
+    Transaction transaction;
+    Node* next;
+    std::string timestamp;
+};
+
 /**
 *
  * BlockChain - Defining the new BlockChain Type
  *
 */
 struct BlockChain {
-    // TODO: Implement 
+    int size;
+    Node* head;
 };
 
 /**

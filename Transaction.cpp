@@ -1,20 +1,12 @@
 
 #include <string>
 #include <fstream>
+#include "Transaction.h"
 #include "Utilities.h"
+#include <iostream>
 using std::string;
 using std::ofstream;
 
-/**
-*
- * Transaction - Defining the new Transaction Type
- *
-*/
-struct Transaction {
-    unsigned int value;
-    string sender;
-    string receiver;
-};
 
 
 /**
@@ -42,6 +34,7 @@ void TransactionDumpInfo(const Transaction& transaction, ofstream& file){
  * @return The hashed message
 */
 string TransactionHashedMessage(const Transaction& transaction){
+    std::cout<< transaction.value << "  "<< hash(transaction.value, transaction.sender, transaction.receiver) << std::endl;
     return hash(transaction.value, transaction.sender, transaction.receiver);
 }
 
