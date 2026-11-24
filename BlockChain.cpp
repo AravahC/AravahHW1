@@ -96,7 +96,7 @@ void BlockChainAppendTransaction(
         const string& receiver,
         const string& timestamp
 ){
-    std::cout<< "EnteredAppendTransaction" << std::endl;
+    //std::cout<< "EnteredAppendTransaction" << std::endl;
     Node* iter = blockChain.head;
     if(iter == nullptr){
         Node* newNode = new Node;
@@ -238,7 +238,7 @@ void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
     while(iter->next != nullptr){
         //file << num << "."<< std::endl;
         //TransactionDumpInfo(iter->transaction, file);
-        std::cout<< "This is number: "<< num << std::endl;
+        //std::cout<< "This is number: "<< num << std::endl;
         file << TransactionHashedMessage(iter->transaction) << std::endl;
         iter = iter->next;
         num++;
@@ -275,14 +275,20 @@ void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
 */
 bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
     //if error, check the sizing
-    Node* iter;
+    Node* iter = blockChain.head;
     std::string hashed;
     bool hashedCorrectly = true;
+    int num = 1;
     while(file >> hashed){
+        //std::cout<< "Am reading file up to line: " << num << " Hash: " << hashed << std::endl;
+        if(iter == nullptr){
+            return false;
+        }
         if(!TransactionVerifyHashedMessage(iter->transaction, hashed)){
             return false;
         }
         iter = iter->next;
+        num++;
     }
     return hashedCorrectly;
 }
@@ -317,5 +323,8 @@ void BlockChainCompress(BlockChain& blockChain){
  * @param function a pointer to a transform function
 */
 void BlockChainTransform(BlockChain& blockChain, updateFunction function){
-
+    Node* iter = blockChain.head;
+    while(iter != nullptr){
+        iter->transaction.value = function(iter->transaction.value);
+    }
 }
