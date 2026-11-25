@@ -34,6 +34,7 @@ int main(int argc, char* argument[]){
         std::ofstream outFile(outFiletext);
         BlockChainCompress(blockie);
         BlockChainDump(blockie, outFile);
+       // std::cout<< "I am not segfault post dumping in compress" << std::endl;
     }
     else if(operation == "verify"){
         std::ifstream outFile(outFiletext);
@@ -43,6 +44,7 @@ int main(int argc, char* argument[]){
         else{
             std::cout << "Verification failed" << std::endl;
         }
+        BlockChainDumpHashed(blockie, outfile);
     }
     else {
         std::cerr << "Usage: ./mtm_blockchain <op> <source> <target>" << std::endl;
@@ -56,6 +58,7 @@ int main(int argc, char* argument[]){
     //std::cout<< "was unable to verify the blockchain!" << std::endl;
     //std::cout<< std::boolalpha << yes << std::endl;
     BlockChainDestroy(blockie);
+    //std::cout<< "blockchain destroy is totally not the error" << std::endl;
     inFile.close();
     //inFile_target.close();
     //outFile.close();
