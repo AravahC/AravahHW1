@@ -44,7 +44,7 @@ int main(int argc, char* argument[]){
         else{
             std::cout << "Verification failed" << std::endl;
         }
-        BlockChainDumpHashed(blockie, inFile);
+        BlockChainDumpHashed(blockie, outFile);
     }
     else {
         std::cerr << "Usage: ./mtm_blockchain <op> <source> <target>" << std::endl;
