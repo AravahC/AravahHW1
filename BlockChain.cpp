@@ -251,7 +251,7 @@ void BlockChainDump(const BlockChain& blockChain, ofstream& file){
 */
 void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
 
-    //file << "BlockChain Info:" << std::endl;
+    //file << "BlockChain Info:" << std::endl; 
     Node* iter = blockChain.head;
     int num = 1;
     for(int i  = 0; i< blockChain.size-1; i++){
