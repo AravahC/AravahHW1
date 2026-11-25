@@ -28,11 +28,14 @@ BlockChain BlockChainInit(){
  * BlockChainDestory - Destroys an existing BlockChain and deallocates all of its memory, after calling this method, blockChain can't be used/accessed again.
 */
 void BlockChainDestroy(BlockChain& blockChain){
-    while(blockChain.head != nullptr){
-        Node* temp = blockChain.head->next;
+    for(int i = 0; i< blockChain.size - 1; i++){
+    //while(blockChain.head != nullptr){
+       Node* temp = blockChain.head->next;
         delete blockChain.head;
         blockChain.head = temp;
     }
+    delete blockChain.head;
+//}
     blockChain.size = 0;
 }
 
@@ -61,7 +64,8 @@ int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     int balance = 0;
     bool personFound = false;
     Node* iter = blockChain.head;
-    while(iter!=nullptr){
+    for(int i = 0; i < blockChain.size; i++){
+   // while(iter!=nullptr){
         if(iter->transaction.sender == name){
             balance -= iter->transaction.value;
             personFound = true;
@@ -98,24 +102,29 @@ void BlockChainAppendTransaction(
 ){
     //std::cout<< "EnteredAppendTransaction" << std::endl;
     Node* iter = blockChain.head;
-    if(iter == nullptr){
+    if(blockChain.size == 0){
         Node* newNode = new Node;
         Transaction transaction;
     //std::cout<< "Initialized my node iter as the head of the blockchain and the transaction" << std::endl;
-    transaction.value = value;
-    transaction.sender = sender;
-    transaction.receiver = receiver;
-    newNode-> transaction = transaction;
-    newNode->timestamp = timestamp;
-    blockChain.head = newNode;
-    return;
+        transaction.value = value;
+        transaction.sender = sender;
+        transaction.receiver = receiver;
+        newNode-> transaction = transaction;
+        newNode->timestamp = timestamp;
+        blockChain.head = newNode;
+        blockChain.size++;
+        return;
     }
-    while(iter->next != nullptr){
-        //std::cout<< "Iterating to next element"<< std::endl;
+    //std::cout<< "Seg fault here? post adding head, pre loopety loop?" << std::endl;
+    for(int i = 0; i < blockChain.size-1; i++){
         iter = iter->next;
     }
+/*     while(iter->next != nullptr){
+        //std::cout<< "Iterating to next element"<< std::endl;
+        iter = iter->next;
+    } */
     
-   // std::cout<< "Segfault here? after iterating to last element?" << std::endl; 
+    //std::cout<< "Segfault here? after iterating to last element?" << std::endl; 
     Transaction transaction;
     //std::cout<< "Initialized my node iter as the head of the blockchain and the transaction" << std::endl;
     transaction.value = value;
@@ -127,12 +136,14 @@ void BlockChainAppendTransaction(
     //std::cout<< "Created the new node" << std::endl;
     newNode-> transaction = transaction;
     newNode->timestamp = timestamp;
+    newNode->next = nullptr;
     //std::cout<< "Set the timestamp as timestamp of the newNode" << std::endl;
 
     //std::cout<< "Node " << std::endl;
     iter->next = newNode;
    // std::cout<< "iter->next to be newNode"<< std::endl; 
     blockChain.size++;
+    //std::cout<< "Ended appendnewtransaction!" << std::endl;
 }
 
 
@@ -148,13 +159,15 @@ void BlockChainAppendTransaction(
         const Transaction& transaction,
         const string& timestamp
 ){
+   
     Node* iter = blockChain.head;
-    while(iter->next!=nullptr){
+    for(int i = 0; i< blockChain.size - 1; i++){
         iter = iter->next;
     }
-    Node* newNode = nullptr;
+    Node* newNode = new Node;
     newNode->transaction = transaction;
     newNode->timestamp = timestamp;
+    newNode->next = nullptr;
     iter->next = newNode;
     blockChain.size++;
 }
@@ -169,20 +182,23 @@ void BlockChainAppendTransaction(
  *
 */
 BlockChain BlockChainLoad(ifstream& file){
+    //std::cout<< "Loading the blockchain!" << std::endl;
     BlockChain block = BlockChainInit();
     std::string sender;
     std::string receiver;
-    int sum = 0;
+    //int sum = 0;
     int value;
     std::string timestamp;
     //std::cout<< "I have entered the BlockChainLoad Function" << std::endl;
     while(file >> sender >> receiver >> value >> timestamp){
-      //  std::cout<< "added element: " << sum+1 << std::endl;
+        //std::cout<< "added element: " << sum+1 << std::endl;
         BlockChainAppendTransaction(block, value, sender, receiver, timestamp);
-        sum++;
+        //sum++;
     }
-    block.size = sum;
+   // block.size = sum;
+    //std::cout<< "Finished loading the blockchain" << std::endl;
     return block;
+
 }
 
 
@@ -203,16 +219,19 @@ BlockChain BlockChainLoad(ifstream& file){
  *
 */
 void BlockChainDump(const BlockChain& blockChain, ofstream& file){
+   // std::cout<< "Commenced dumping" << std::endl;
     file << "BlockChain Info:" << std::endl;
     Node* iter = blockChain.head;
     int num = 1;
-    while(iter != nullptr){
+    for(int i = 0; i < blockChain.size; i++){
+   // while(iter != nullptr){
         file << num << "."<< std::endl;
         TransactionDumpInfo(iter->transaction, file);
         file << "Transaction timestamp: " << iter->timestamp << std::endl;
         iter = iter->next;
         num++;
     }
+    //std::cout<< "Dumping completed" << std::endl;
 }
 
 
@@ -235,7 +254,8 @@ void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
     //file << "BlockChain Info:" << std::endl;
     Node* iter = blockChain.head;
     int num = 1;
-    while(iter->next != nullptr){
+    for(int i  = 0; i< blockChain.size; i++){
+    //while(iter->next != nullptr){
         //file << num << "."<< std::endl;
         //TransactionDumpInfo(iter->transaction, file);
         //std::cout<< "This is number: "<< num << std::endl;
@@ -281,7 +301,7 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
     int num = 1;
     while(file >> hashed){
         //std::cout<< "Am reading file up to line: " << num << " Hash: " << hashed << std::endl;
-        if(iter == nullptr){
+        if(blockChain.size == 0){
             return false;
         }
         if(!TransactionVerifyHashedMessage(iter->transaction, hashed)){
@@ -301,8 +321,51 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
  * @param blockChain BlockChain to compress
 */
 void BlockChainCompress(BlockChain& blockChain){
+    //I KNOW WHAT THE PROBLEMO IS: It is bc iter->next->next. Gotta check that ain't a nullptr
+    //std::cout<< "Beginning to compress the blockchain" << std::endl;
     Node* iter = blockChain.head;
-    while(iter->next != nullptr){
+    std::string times = "";
+    if(blockChain.head !=nullptr){
+    times = iter->timestamp;
+}
+else{
+    return;
+}
+    int i = 0;
+    while(i < blockChain.size-1){
+        std::cout<< "i = " << i << std::endl;
+        if(iter== nullptr || iter->next == nullptr){
+            //std::cout<< "I have reached the end" << std::endl;
+            return;
+        }
+        if ((iter->transaction.sender == iter->next->transaction.sender) && (iter->transaction.receiver == iter->next->transaction.receiver)){
+            iter->transaction.value += iter->next->transaction.value;
+            std::cout<< "New transaction value: " << iter->transaction.value << std::endl;
+          if(iter->next->next != nullptr){
+            Node* newNode = iter->next->next;
+            newNode->timestamp = times;
+            Node* nodeToDelete = iter->next;
+            iter->next = newNode;
+            delete nodeToDelete;
+            blockChain.size--;}
+            else{
+                iter->timestamp = times;
+                blockChain.size--;
+                iter->next = nullptr;
+                delete iter->next;
+                return;
+            }
+            //std::cout<< "I cause the error when we are compressing and i = " << i << std::endl;
+        }
+        else{
+            iter = iter->next;
+            i++;
+            //std::cout<< "I cause the error when we are not compressing and i = " << i << std::endl;
+        }
+
+    }
+    //std::cout<< "Finished compressing the blockchain" << std::endl;
+    /* while(iter->next != nullptr){
         if ((iter->transaction.sender == iter->next->transaction.sender) && (iter->transaction.receiver == iter->next->transaction.receiver)){
             iter->transaction.value += iter->next->transaction.value;
             //std::cout<< "Old timestamp: " << iter->timestamp << " New timestamp: "<< iter->next->timestamp << std::endl;
@@ -312,7 +375,7 @@ void BlockChainCompress(BlockChain& blockChain){
         Node* nodeToDelete = iter->next;
         iter->next = newNode;
         delete nodeToDelete;
-    }
+    } */
 }
 
 
@@ -324,7 +387,9 @@ void BlockChainCompress(BlockChain& blockChain){
 */
 void BlockChainTransform(BlockChain& blockChain, updateFunction function){
     Node* iter = blockChain.head;
-    while(iter != nullptr){
+    for(int i = 0; i < blockChain.size; i++){
+    //while(iter != nullptr){
         iter->transaction.value = function(iter->transaction.value);
-    }
+    //}
+}
 }
