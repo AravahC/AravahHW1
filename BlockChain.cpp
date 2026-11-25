@@ -254,7 +254,7 @@ void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
     //file << "BlockChain Info:" << std::endl;
     Node* iter = blockChain.head;
     int num = 1;
-    for(int i  = 0; i< blockChain.size; i++){
+    for(int i  = 0; i< blockChain.size-1; i++){
     //while(iter->next != nullptr){
         //file << num << "."<< std::endl;
         //TransactionDumpInfo(iter->transaction, file);
@@ -351,8 +351,8 @@ else{
             else{
                 iter->timestamp = times;
                 blockChain.size--;
-                iter->next = nullptr;
                 delete iter->next;
+                iter->next = nullptr;
                 return;
             }
             //std::cout<< "I cause the error when we are compressing and i = " << i << std::endl;
