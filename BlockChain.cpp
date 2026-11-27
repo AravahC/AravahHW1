@@ -308,9 +308,10 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
         if(!TransactionVerifyHashedMessage(iter->transaction, hashed)){
             return false;
         }
-        else if(garbage != iter->transaction.value){
-            return false;
-        }
+       // else if(garbage != iter->transaction.value){
+         //   return false;
+        //}
+        garbage = 2;
         iter = iter->next;
         num++;
     }
@@ -337,14 +338,14 @@ else{
 }
     int i = 0;
     while(i < blockChain.size-1){
-        std::cout<< "i = " << i << std::endl;
+        //std::cout<< "i = " << i << std::endl;
         if(iter== nullptr || iter->next == nullptr){
             //std::cout<< "I have reached the end" << std::endl;
             return;
         }
         if ((iter->transaction.sender == iter->next->transaction.sender) && (iter->transaction.receiver == iter->next->transaction.receiver)){
             iter->transaction.value += iter->next->transaction.value;
-            std::cout<< "New transaction value: " << iter->transaction.value << std::endl;
+           // std::cout<< "New transaction value: " << iter->transaction.value << std::endl;
           if(iter->next->next != nullptr){
             Node* newNode = iter->next->next;
             newNode->timestamp = times;
