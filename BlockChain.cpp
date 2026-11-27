@@ -251,7 +251,7 @@ void BlockChainDump(const BlockChain& blockChain, ofstream& file){
 */
 void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
 
-    //file << "BlockChain Info:" << std::endl;
+    //file << "BlockChain Info:" << std::endl; 
     Node* iter = blockChain.head;
     int num = 1;
     for(int i  = 0; i< blockChain.size-1; i++){
@@ -297,14 +297,18 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
     //if error, check the sizing
     Node* iter = blockChain.head;
     std::string hashed;
+    int garbage; //unclear
     bool hashedCorrectly = true;
     int num = 1;
-    while(file >> hashed){
+    while(file >> garbage >> hashed){
         //std::cout<< "Am reading file up to line: " << num << " Hash: " << hashed << std::endl;
         if(blockChain.size == 0){
             return false;
         }
         if(!TransactionVerifyHashedMessage(iter->transaction, hashed)){
+            return false;
+        }
+        else if(garbage != iter->transaction.value){
             return false;
         }
         iter = iter->next;
