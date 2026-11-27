@@ -297,9 +297,10 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
     //if error, check the sizing
     Node* iter = blockChain.head;
     std::string hashed;
+    std::string garbage; //unclear
     bool hashedCorrectly = true;
     int num = 1;
-    while(file >> hashed){
+    while(file >> garbage >> hashed){
         //std::cout<< "Am reading file up to line: " << num << " Hash: " << hashed << std::endl;
         if(blockChain.size == 0){
             return false;
