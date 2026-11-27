@@ -40,10 +40,10 @@ int main(int argc, char* argument[]){
         std::ifstream outFile(outFiletext);
         //std::ofstream out_stuff("verify.out");
         if(BlockChainVerifyFile(blockie, outFile)){
-            std::cout<< "Verification passed";
+            std::cout<< "Verification passed" << std::endl;
         }
         else{
-            std::cout << "Verification failed";
+            std::cout << "Verification failed" << std::endl;
         }
         //BlockChainDumpHashed(blockie, out_stuff);
     }

@@ -297,7 +297,7 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
     //if error, check the sizing
     Node* iter = blockChain.head;
     std::string hashed;
-    std::string garbage; //unclear
+    int garbage; //unclear
     bool hashedCorrectly = true;
     int num = 1;
     while(file >> garbage >> hashed){
@@ -306,6 +306,9 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
             return false;
         }
         if(!TransactionVerifyHashedMessage(iter->transaction, hashed)){
+            return false;
+        }
+        else if(garbage != iter->transaction.value){
             return false;
         }
         iter = iter->next;
