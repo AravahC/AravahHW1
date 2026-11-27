@@ -38,13 +38,14 @@ int main(int argc, char* argument[]){
     }
     else if(operation == "verify"){
         std::ifstream outFile(outFiletext);
+        std::ofstream out_stuff('verify.out')
         if(BlockChainVerifyFile(blockie, outFile)){
-            std::cout<< "Verification passed"<< std::endl;
+            std::cout<< "Verification passed";
         }
         else{
-            std::cout << "Verification failed" << std::endl;
+            std::cout << "Verification failed";
         }
-       // BlockChainDumpHashed(blockie, outFile);
+        BlockChainDumpHashed(blockie, out_stuff);
     }
     else {
         std::cerr << "Usage: ./mtm_blockchain <op> <source> <target>" << std::endl;
