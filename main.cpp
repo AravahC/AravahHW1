@@ -38,7 +38,7 @@ int main(int argc, char* argument[]){
     }
     else if(operation == "verify"){
         std::ifstream outFile(outFiletext);
-        std::ofstream out_stuff("verify.out")
+        std::ofstream out_stuff("verify.out");
         if(BlockChainVerifyFile(blockie, outFile)){
             std::cout<< "Verification passed";
         }
